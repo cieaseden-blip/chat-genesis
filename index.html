@@ -43,8 +43,8 @@
         import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
 
 
-        // TOKEN INTEGRADO EXITOSAMENTE
-        const HF_TOKEN = "Hf_srfJKyxPXcLiEvxrtDgBhPGdgTFqdNGImt"; 
+        // TOKEN CORREGIDO: Se cambió 'Hf_s' por 'hf_' y se eliminó el carácter extra.
+        const HF_TOKEN = "hf_rfJKyxPXcLiEvxrtDgBhPGdgTFqdNGImt"; 
         const inference = new HfInference(HF_TOKEN);
 
 
@@ -54,7 +54,6 @@
             if(!input.value) return;
 
 
-            // Mostrar mensaje usuario
             box.innerHTML += `<div class="msg user">${input.value}</div>`;
             const userText = input.value;
             input.value = "";
@@ -72,7 +71,9 @@
                 box.innerHTML += `<div class="msg genesis">${response.choices[0].message.content}</div>`;
                 box.scrollTop = box.scrollHeight;
             } catch (e) {
-                box.innerHTML += `<div class="msg genesis">Error: Revisa tu Token en el código.</div>`;
+                // Mejora para diagnóstico desde el celular
+                console.error(e);
+                box.innerHTML += `<div class="msg genesis" style="background: #e74c3c;">Error técnico: ${e.message.includes('401') ? 'Token Inválido' : 'Fallo de conexión'}</div>`;
             }
         }
     </script>
